@@ -6,14 +6,18 @@ const pathUtil = require('../utilities/path');
 
 const router = express.Router();
 
+const products = [];
+
 router.get('/addProduct', (req, res)=>{
-    res.sendFile(path.join(pathUtil, 'views', 'add-product.html'));
+  //  res.sendFile(path.join(pathUtil, 'views', 'add-product.html'));
+  res.render('add-product',{title: 'Add Product', layout: false});
 });
 
 router.post('/addProduct', (req, res)=>{
-    console.log(req.body)
-    let newProd = req.body["title"];
-    res.send(`${newProd} has been created <br>  <p><a href="/">Destinations</a></p>  `);
+    let newProd = req.body.title;
+    products.push(newProd);
+    res.redirect('/');
 })
 
-module.exports = router;
+module.exports.routes = router;
+module.exports.products = products;
